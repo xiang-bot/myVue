@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="logo">
+            <img src="https://www.baidu.com/img/dong_30a61f45c8d4634ca14da8829046271f.gif" alt="">
+        </div>
+        <div class="search-box">
+            <span class="search-area">
+                <input type="text" v-model="text" maxlength="100" @focus="()=> inputFocus = true"
+                    @blur="() => inputFocus = false">
+                <span class="icon icon-price"></span>
+            </span>
+            <span class="search-btn">百度一下</span>
+        </div>
+        <ul class="search-list" v-show="inputFocus && searchResList.length">
+            <li v-for="value in searchResList" :key="value">{{value}}</li>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                text: '',
+                inputFocus: false,
+                searchResList: []
+            },
+            methods: {
+                textHand(res) {
+                    console.log(res);
+                }
+            },
+            watch:{
+                text(){
+                    $.ajax({
+                        url:" https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+                        dataType:'jsonp',
+                        data:{
+                            wd:this.text,
+                            cb:'vm.textHand',
+                        }
+                    })
+                }
+            }
+        //         }
+            // methods: {
+            //     handle(res) {
+            //         this.searchResList = res.s;
+            //     }
+            // },
+            // watch: {
+            //     text() {
+            //         $.ajax({
+            //             url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+            //             dataType: "jsonP",
+            //             data: {
+            //                 wd: this.text,
+            //                 cb: 'vm.handle'
+            //             }
+            //         })
+            //     }
+            // }
+        })
+        // methods:{
+        //         textHand(res){
+        //             console.log(res);
+        //         }
+        //     },
+        //     watch:{
+        //         handle(){
+        //             $.ajax({
+        //                 dataType:'jsonp',
+        //                 url:" https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+        //                 data:{
+        //                     wd:this.text,
+        //                     cb:'vm.textHand',
+
+        //                 }
+        //             })
+        //         }
+    </script>
+</body>
+
+</html>

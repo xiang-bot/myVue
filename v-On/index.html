@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="app">
+        <li v-for="(person, index) in persons" :key="index">
+            {{ person }}
+            <!-- <input type="text" />
+            <button @click="handleClick(index)">下移</button> -->
+        </li>
+    </ul>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                persons: ['shan', 'jc', 'cst', 'deng']
+            },
+            // methods: {
+            //     handleClick(index) {
+            //         const deleteItem = this.persons.splice(index, 1);
+            //         this.persons.splice(index + 1, 0, ...deleteItem)
+            //     }
+            // }
+        })
+    </script>
+</body>
+
+</html>

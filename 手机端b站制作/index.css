@@ -1,0 +1,148 @@
+.header {
+    position: fixed;
+    top: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    padding-top: 10px;
+    background-color: #fff;
+    padding-bottom: 15px;
+}
+
+.download {
+    width: 70px;
+    line-height: 24px;
+    text-align: center;
+    height: 24px;
+    font-size: 12px;
+    color: #fff;
+    background: #fb7299;
+    border-radius: 5%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 12px;
+    -webkit-user-drag: 78px;
+}
+
+.input {
+    width: 132px;
+    height: 24px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    color: #999;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+}
+
+.input svg {
+    margin-left: 115px;
+}
+
+.input span {
+    width: 92px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header .logo {
+    margin-left: 18px;
+}
+
+.header .top svg {
+    border-radius: 50%;
+}
+
+.nav-box {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    /* background: #fb7299; */
+}
+.nav-box .nav-list::-webkit-scrollbar{
+    display: none;
+}
+.nav-box .nav-list {
+    white-space: nowrap;
+    width: 85%;
+    /* background-color: gray; */
+    overflow-x: scroll;
+    padding-left: 24px;
+}
+
+.nav-box .nav {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 40px;
+    color: #575757;
+    font-size: 14px;
+    border-bottom: 2px solid transparent;
+}
+.nav-box .nav.active{
+    border-color: #fb7299;
+    color: #fb7299;
+}
+
+.nav-box .down{
+    position: absolute;
+    top: 0px;
+    right: 16px;
+}
+
+/* 两个样式不一样，要用前面的加样式来确定 */
+.hide-nav-box{
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    padding-bottom: 10px;
+    transition: top .3s;
+    z-index: 2;
+    background-color: #fff;
+}
+.hide-nav-box.hide{
+    top: -190px;
+}
+.hide-nav-box .nav{
+    display: inline-block;
+    width: 32px;
+    margin-right: 14px;
+    margin-left: 14px;
+    margin-bottom: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 14px;
+    color: #575757;
+    border-bottom: 2px solid transparent;
+}
+.hide-nav-box .nav.big{
+    width: 46px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+.hide-nav-box .nav.active{
+    border-color: #fb7299;
+    color: #fb7299;
+}
+.hide-nav-box .up{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 1;
+    transform: translateX(-50%);
+}
+/* .hide-nav-box .nav-list{
+
+} */
+/* .hide-nav-box.hide{
+    display: none;
+} */
+

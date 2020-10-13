@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <input type="text" name="" id="" v-model="msg"> -->
+        <div @click="handClick">点击事件11</div>
+        <p>{{msg}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '输出结果',
+                timer:0
+            },
+            // beforeCreate (){
+            //     console.log(this.msg);
+            //     console.log(this.handClick);
+            // },
+            // create (){
+            //     console.log(this.msg);
+            //     console.log(this.handClick);
+            // },
+            // beforeMount(){
+            //     console.log(this.el);
+            //     console.log('111');
+            // },
+            // mounted(){
+            //     console.log(this.el);
+            // },
+            // update(){
+            //     console.log(this.msg);
+            //     console.log(this.$el);
+            // },
+            created() {
+                this.timer = setInterval(() => {
+                    console.log('xxx');
+                }, 500)
+            },
+            beforeDestroy() {
+                clearInterval(this.timer);
+            },
+            // methods: {
+            //     handClick() {
+            //         console.log(handClick);
+            //     }
+            // },
+            // watch: {
+            //     msg: {
+            //         handler() {
+            //             console.log('侦听msg的值');
+            //         },
+            //         immediate: true,
+            //     }
+            // }
+        })
+    </script>
+</body>
+
+</html>

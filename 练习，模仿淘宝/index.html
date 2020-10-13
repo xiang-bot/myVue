@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="goods" v-for="(item,itemIndex) in goodsList" :key="item.id">
+            <div class="title">{{item.title}}:</div>
+            <ul class="type-list">
+                <li class="type" v-for="(person,personIndex) in item.typeList" :key="person" :class="{
+                    active: personIndex === item.index
+                }" @click="addFilterHandle(personIndex,item,person,itemIndex)">{{person}}</li>
+            </ul>
+        </div>
+        <div class="choose-type">
+            <div>以选条件:</div>
+            <span class="no-goods" v-if="!showFilterGoods">
+                暂时没有选择过滤条件
+            </span>
+            <ul class="filter-list" v-else>
+                <li v-for="(item,itemKey) in filterObj">
+                    {{item}}
+                    <span class="delete-goods" @click="deleteFilterGoods(goodsKey)">x</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                filterObj: {},
+                showFilterGoods: false,
+                goodsList: [{
+                        title: '上装',
+                        typeList: ['全部', '针织衫', '毛呢外套', 'T恤', '羽绒服', '棉衣', '卫衣', '风衣'],
+                        id: 1,
+                    },
+                    {
+                        title: '裤装',
+                        typeList: ['全部', '牛仔裤', '小脚/铅笔裤', '休闲裤', '打底裤', '哈伦裤'],
+                        id: 2,
+                    },
+                    {
+                        title: '裙装',
+                        typeList: ['全部', '连衣裙', '半身裙', '长袖连衣裙', '中长款连衣裙'],
+                        id: 3,
+                    }
+                ]
+            },
+            methods: {
+                addFilterHandle(personIndex, item, person, itemIndex) {
+                    if (person === "全部") {
+                        return;
+                    }
+                    this.showFilterGoods = true;
+                    item.index = personIndex;
+                    //item是最外面的3个div,所以，我们通过$set给item填加了一个index,所以，原本的那个
+                    //颜色就是第一个全部的字，当我们点击了一个，所以，这个改变这个索引值，所以会变
+
+                    vm.$set(this.filterObj, itemIndex, person);
+                },
+                deleteFilterGoods(itemKey) {
+                    this.$delete(this.filterObj, itemKey);
+                    this.goodsList[itemKey].index = 0;
+                    this.changeShowFilter();
+                },
+                changeShowFilter() {
+                    const filterObjStr = JSON.stringify(this.filterObj);
+                    this.showFilterGoods = filterObjStr !== '{}';
+                }
+            }
+        })
+        vm.goodsList.forEach(item => {
+            vm.$set(item, 'index', 0)
+        });
+    </script>
+</body>
+
+</html>
