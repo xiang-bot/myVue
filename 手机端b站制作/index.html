@@ -102,13 +102,11 @@
             hide:navIndex === 2 && navHide
         }" v-for="navIndex in 2">
             <ul class="nav-list">
-                <li class="nav" 
-                :class="{
+                <li class="nav" :class="{
                     big:value.title.length===3 && navIndex ===2,
                     active:index === navActiveIndex
-                    }" v-for="(value,index) in goodList" 
-                    @click="handleNavClick(index)"
-                    :key="value.id">{{value.title}}</li>
+                    }" v-for="(value,index) in goodList" @click="handleNavClick(index)" :key="value.id">{{value.title}}
+                </li>
             </ul>
             <div class="down" v-if="navIndex === 1" @click="handleClick">
                 <svg width="16" height="32" viewBox="0 0 1024 1024">
@@ -125,6 +123,21 @@
                 </svg>
             </div>
         </div>
+        <!-- 轮播图样式 -->
+        <div class="banner-box">
+            <ul class="banner-list" :style="bannerStyle" @transitionend="handleTransitionEnd">
+                <li v-for="value in bannerList" class="banner" :key="value.id">
+                    <img :src="value.poster" :alt="value.title">
+                </li>
+            </ul>
+            <ul class="index-list">
+                <li v-for="index in bannerList.length-1" :key="index" class="index"
+                :class="{
+                    active: index-1 === bannerActionIndex % 3
+                }"
+                ></li>
+            </ul>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -135,6 +148,13 @@
                 goodList: [],
                 navHide: true, //如果为false,则会出现
                 navActiveIndex: 0,
+                bannerList: [],
+                bannerWidth: 350,
+                bannerStyle: {
+                    left: 0,
+                    transition: 'left .3s'
+                },
+                bannerActionIndex: 0,
             },
             methods: {
                 handleClick() {
@@ -143,6 +163,23 @@
                 handleNavClick(index) {
                     this.navActiveIndex = index;
                 },
+                autoMove() {
+                    setTimeout(() => {
+                        if (this.bannerActionIndex === 0) {
+                            this.bannerStyle.transition = 'left .3s';
+                        }
+                        this.bannerActionIndex++;
+                        this.bannerStyle.left = -this.bannerActionIndex * this.bannerWidth + 'px';
+                    }, 1500)
+                },
+                handleTransitionEnd() {
+                    if (this.bannerActionIndex === 3) {
+                        this.bannerActionIndex = 0;
+                        this.bannerStyle.left = 0;
+                        this.bannerStyle.transition = 'none';
+                    }
+                    this.autoMove()
+                }
             },
             created() {
                 axios({
@@ -155,6 +192,26 @@
                 }).catch((err) => {
                     console.log(err);
                 });
+                //轮播图的axios请求
+                axios({
+                    method: 'get',
+                    url: 'https://developer.duyiedu.com/vue/bz/banner',
+                }).then((res) => {
+                    if (res.status == 200) {
+                        const lastEle = {
+                            ...res.data.data[0]
+                        };
+                        console.log(res);
+                        console.log(lastEle);
+                        lastEle.id = Math.floor(Math.random() * 10000000)
+                        this.bannerList = [...res.data.data, lastEle];
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
+            mounted() {
+                this.autoMove();
             }
 
         })
