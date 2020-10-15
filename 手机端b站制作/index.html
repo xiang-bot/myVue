@@ -165,10 +165,11 @@
                 },
                 autoMove() {
                     setTimeout(() => {
+                        
                         if (this.bannerActionIndex === 0) {
                             this.bannerStyle.transition = 'left .3s';
                         }
-                        this.bannerActionIndex++;
+                        this.bannerActionIndex++ ;
                         this.bannerStyle.left = -this.bannerActionIndex * this.bannerWidth + 'px';
                     }, 1500)
                 },
