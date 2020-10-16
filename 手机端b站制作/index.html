@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" @scroll="handleScroll">
         <!-- 头部样式 -->
         <div class="header">
             <div class="logo">
@@ -124,40 +124,46 @@
             </div>
         </div>
         <!-- 轮播图样式 -->
-        <div class="banner-box">
+        <div class="banner-box" v-if="bannerList.length">
             <ul class="banner-list" :style="bannerStyle" @transitionend="handleTransitionEnd">
                 <li v-for="value in bannerList" class="banner" :key="value.id">
                     <img :src="value.poster" :alt="value.title">
                 </li>
             </ul>
             <ul class="index-list">
-                <li v-for="index in bannerList.length-1" :key="index" class="index"
-                :class="{
+                <li v-for="index in bannerList.length-1" :key="index" class="index" :class="{
                     active: index-1 === bannerActionIndex % 3
-                }"
-                ></li>
+                }"></li>
             </ul>
         </div>
         <!-- 下面视频 -->
-        <div class="video-box">
+        <div class="video-box" v-if="videoList.length">
             <ul class="video-list">
-                <li class="video"
-                v-for="value in videoList"
-                :key="value.id"
-                >
+                <li class="video" v-for="value in videoList" :key="value.id">
                     <div class="poster">
-                        <img :src="value.poster"
-                             :alt="value.title">
+                        <img :src="value.poster" :alt="value.title">
                         <div class="info">
                             <div class="play">
-                                <svg viewBox="0 0 1024 1024"><path d="M800 128H224C134.4 128 64 198.4 64 288v448c0 89.6 70.4 160 160 160h576c89.6 0 160-70.4 160-160V288c0-89.6-70.4-160-160-160z m96 608c0 54.4-41.6 96-96 96H224c-54.4 0-96-41.6-96-96V288c0-54.4 41.6-96 96-96h576c54.4 0 96 41.6 96 96v448z"></path><path d="M684.8 483.2l-256-112c-22.4-9.6-44.8 6.4-44.8 28.8v224c0 22.4 22.4 38.4 44.8 28.8l256-112c25.6-9.6 25.6-48 0-57.6z"></path></svg>
-                                {{ value.play >10000?value.play/10000+'万':value.play}}
+                                <svg viewBox="0 0 1024 1024">
+                                    <path
+                                        d="M800 128H224C134.4 128 64 198.4 64 288v448c0 89.6 70.4 160 160 160h576c89.6 0 160-70.4 160-160V288c0-89.6-70.4-160-160-160z m96 608c0 54.4-41.6 96-96 96H224c-54.4 0-96-41.6-96-96V288c0-54.4 41.6-96 96-96h576c54.4 0 96 41.6 96 96v448z">
+                                    </path>
+                                    <path
+                                        d="M684.8 483.2l-256-112c-22.4-9.6-44.8 6.4-44.8 28.8v224c0 22.4 22.4 38.4 44.8 28.8l256-112c25.6-9.6 25.6-48 0-57.6z">
+                                    </path>
+                                </svg>
+                                {{ value.play}}
                             </div>
-                            <div 
-                            v-if="value.rank"
-                            class="rank">
-                            <svg viewBox="0 0 1024 1024"><path d="M800 128H224C134.4 128 64 198.4 64 288v448c0 89.6 70.4 160 160 160h576c89.6 0 160-70.4 160-160V288c0-89.6-70.4-160-160-160z m96 608c0 54.4-41.6 96-96 96H224c-54.4 0-96-41.6-96-96V288c0-54.4 41.6-96 96-96h576c54.4 0 96 41.6 96 96v448z"></path><path d="M240 384h64v64h-64zM368 384h384v64h-384zM432 576h352v64h-352zM304 576h64v64h-64z"></path></svg>
-                            {{ value.rank }}
+                            <div v-if="value.rank" class="rank">
+                                <svg viewBox="0 0 1024 1024">
+                                    <path
+                                        d="M800 128H224C134.4 128 64 198.4 64 288v448c0 89.6 70.4 160 160 160h576c89.6 0 160-70.4 160-160V288c0-89.6-70.4-160-160-160z m96 608c0 54.4-41.6 96-96 96H224c-54.4 0-96-41.6-96-96V288c0-54.4 41.6-96 96-96h576c54.4 0 96 41.6 96 96v448z">
+                                    </path>
+                                    <path
+                                        d="M240 384h64v64h-64zM368 384h384v64h-384zM432 576h352v64h-352zM304 576h64v64h-64z">
+                                    </path>
+                                </svg>
+                                {{ value.rank }}
                             </div>
                         </div>
                     </div>
@@ -176,13 +182,25 @@
                 navHide: true, //如果为false,则会出现
                 navActiveIndex: 0,
                 bannerList: [],
-                videoList:[],
+                // videoList: [],
                 bannerWidth: 350,
+                videoOldList: [],
                 bannerStyle: {
                     left: 0,
                     transition: 'left .3s'
                 },
                 bannerActionIndex: 0,
+                videoGettingData: false,
+                videoCount: 0,
+            },
+            computed: {
+                videoList() {
+                    return this.videoOldList.map(video => {
+                        video.play = video.play > 10000 ? video.play / 10000 + '万' : video.play;
+                        video.rank = video.rank > 10000 ? video.rank / 10000 + '万' : video.rank;
+                        return video;
+                    })
+                }
             },
             methods: {
                 handleClick() {
@@ -193,11 +211,11 @@
                 },
                 autoMove() {
                     setTimeout(() => {
-                        
+
                         if (this.bannerActionIndex === 0) {
                             this.bannerStyle.transition = 'left .3s';
                         }
-                        this.bannerActionIndex++ ;
+                        this.bannerActionIndex++;
                         this.bannerStyle.left = -this.bannerActionIndex * this.bannerWidth + 'px';
                     }, 1500)
                 },
@@ -208,6 +226,35 @@
                         this.bannerStyle.transition = 'none';
                     }
                     this.autoMove()
+                },
+                handleScroll(e) {
+                    const {
+                        scrollHeight,
+                        offsetHeight,
+                        scrollTop
+                    } = e.target;
+                    const toBottomHeight = scrollHeight - offsetHeight - scrollTop;
+                    const videoLength = this.videoList.length;
+
+                    if (videoLength === this.videoCount) {
+                        return;
+                    }
+
+                    if (toBottomHeight < 200 && !this.videoGettingData) {
+                        this.videoGettingData = true;
+
+                        axios.get('https://developer.duyiedu.com/vue/bz/video', {
+                            params: {
+                                start: this.videoList.length,
+                                offset: 12
+                            }
+                        }).then(res => {
+                            if (res.status === 200) {
+                                this.videoOldList.push(...res.data.data);
+                                this.videoGettingData = false;
+                            }
+                        })
+                    }
                 }
             },
             created() {
@@ -231,8 +278,6 @@
                         const lastEle = {
                             ...res.data.data[0]
                         };
-                        // console.log(res);
-                        // console.log(lastEle);
                         lastEle.id = Math.floor(Math.random() * 10000000)
                         this.bannerList = [...res.data.data, lastEle];
                     }
@@ -240,15 +285,14 @@
                     console.log(err);
                 });
                 //下面视频video的请求
-                axios.get('https://developer.duyiedu.com/vue/bz/video',{
-                    params:{
-                        start:12,
-                        offset:20
+                axios.get('https://developer.duyiedu.com/vue/bz/video', {
+                    params: {
+                        start: 10,
+                        offset: 20
                     }
-                }).then(res=>{
+                }).then(res => {
                     this.videoList = res.data.data;
                 })
-               
             },
             mounted() {
                 this.autoMove();
