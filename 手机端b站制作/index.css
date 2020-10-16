@@ -1,3 +1,8 @@
+#app{
+    height: 100%;
+    overflow-y: scroll;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -10,6 +15,7 @@
     padding-top: 10px;
     background-color: #fff;
     padding-bottom: 15px;
+    z-index: 3;
 }
 
 .download {
@@ -63,6 +69,7 @@
     top: 50px;
     left: 0;
     right: 0;
+    background-color: #fff;
     z-index: 1;
     /* background: #fb7299; */
 }
@@ -207,3 +214,66 @@
 .banner-box .index.active {
     background-color: #fb7299;
   }
+
+  /* 下面视频的区域 */
+  .video-box{
+      padding-top: 90px;
+      padding-left: 6px;
+      padding-right: 6px;
+  }
+  .video{
+      float: left;
+      width: 50%;
+  }
+  .video-box .video-list .video .poster{
+      position: relative;
+      height: 106px;
+      margin-left: 6px;
+      margin-right: 6px;
+      border-radius: 6px;
+      overflow: hidden;
+  }
+  .video-box .video-list .video .poster img{
+    width: 100%;
+    height: 100%;
+  }
+  .video-box .poster .info{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    padding-top: 7px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    color: #fff;
+    font-size: 12px;
+    background-image: linear-gradient(rgba(33, 33, 33, 0), rgba(33, 33, 33, .5));
+  }
+  .video-box .info .play{
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+  }
+  .video-box .info svg{
+      margin-right: 3px;
+      width: 14px;
+      height: 14px;
+      fill: #fff;
+  }
+
+  .video-box .info div {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.video-box .title{
+    font-size: 13px;
+    line-height: 20px;
+    height: 38px;
+    margin: 6px 6px 10px 6px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}

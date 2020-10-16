@@ -138,6 +138,33 @@
                 ></li>
             </ul>
         </div>
+        <!-- 下面视频 -->
+        <div class="video-box">
+            <ul class="video-list">
+                <li class="video"
+                v-for="value in videoList"
+                :key="value.id"
+                >
+                    <div class="poster">
+                        <img :src="value.poster"
+                             :alt="value.title">
+                        <div class="info">
+                            <div class="play">
+                                <svg viewBox="0 0 1024 1024"><path d="M800 128H224C134.4 128 64 198.4 64 288v448c0 89.6 70.4 160 160 160h576c89.6 0 160-70.4 160-160V288c0-89.6-70.4-160-160-160z m96 608c0 54.4-41.6 96-96 96H224c-54.4 0-96-41.6-96-96V288c0-54.4 41.6-96 96-96h576c54.4 0 96 41.6 96 96v448z"></path><path d="M684.8 483.2l-256-112c-22.4-9.6-44.8 6.4-44.8 28.8v224c0 22.4 22.4 38.4 44.8 28.8l256-112c25.6-9.6 25.6-48 0-57.6z"></path></svg>
+                                {{ value.play >10000?value.play/10000+'万':value.play}}
+                            </div>
+                            <div 
+                            v-if="value.rank"
+                            class="rank">
+                            <svg viewBox="0 0 1024 1024"><path d="M800 128H224C134.4 128 64 198.4 64 288v448c0 89.6 70.4 160 160 160h576c89.6 0 160-70.4 160-160V288c0-89.6-70.4-160-160-160z m96 608c0 54.4-41.6 96-96 96H224c-54.4 0-96-41.6-96-96V288c0-54.4 41.6-96 96-96h576c54.4 0 96 41.6 96 96v448z"></path><path d="M240 384h64v64h-64zM368 384h384v64h-384zM432 576h352v64h-352zM304 576h64v64h-64z"></path></svg>
+                            {{ value.rank }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">{{value.title}}</div>
+                </li>
+            </ul>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -149,6 +176,7 @@
                 navHide: true, //如果为false,则会出现
                 navActiveIndex: 0,
                 bannerList: [],
+                videoList:[],
                 bannerWidth: 350,
                 bannerStyle: {
                     left: 0,
@@ -183,6 +211,7 @@
                 }
             },
             created() {
+                //数据 列表的请求
                 axios({
                     method: 'get',
                     url: 'https://developer.duyiedu.com/vue/bz/nav',
@@ -202,14 +231,24 @@
                         const lastEle = {
                             ...res.data.data[0]
                         };
-                        console.log(res);
-                        console.log(lastEle);
+                        // console.log(res);
+                        // console.log(lastEle);
                         lastEle.id = Math.floor(Math.random() * 10000000)
                         this.bannerList = [...res.data.data, lastEle];
                     }
                 }).catch((err) => {
                     console.log(err);
                 });
+                //下面视频video的请求
+                axios.get('https://developer.duyiedu.com/vue/bz/video',{
+                    params:{
+                        start:12,
+                        offset:20
+                    }
+                }).then(res=>{
+                    this.videoList = res.data.data;
+                })
+               
             },
             mounted() {
                 this.autoMove();
