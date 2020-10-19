@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <!-- 里面的数据要用：来绑定，渲染才行 -->
+    <div id="app">
+        <!-- <video-item 
+        v-for="value in videoList"
+        :play="value.play"
+        :poster="value.poster"
+        :rank="value.rank"
+        :title="value.title"
+        ></video-item> -->
+
+        <video-list :video-list="videoList"></video-list>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script src="./node_modules/axios/dist/axios.js"></script>
+    <script>
+        Vue.component('video-list',{
+            props:['videoList'],
+            template:`
+                <div class="video-list">
+                <video-item
+                v-for="video in videoList"
+                v-bind="video"
+                ></video-list>
+                </div>
+            `
+        })
+
+
+        Vue.component('video-item', {
+            props:['title','poster','play','rank'],
+            template: `
+            <div class="video-item">
+                <div class="poster">
+                <img :src="poster">
+                <div class="info">
+                <div class="play">{{play}}</div>
+                <div class="rank">{{rank}}</div>
+                </div>
+                </div>
+                <div class="title">{{title}}</div>
+            </div>
+            `
+        })
+
+
+
+
+        const vm = new Vue({
+            el: "#app",
+            data:{
+                videoList:[]
+            },
+            created(){
+                axios({
+                    method: 'get',
+                    url: 'https://developer.duyiedu.com/vue/bz/video',
+                    params:{
+                        start: 0,
+                        offset: 12
+                    }
+                }).then(res => {
+                    this.videoList = res.data.data;
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -285,13 +285,24 @@
                     console.log(err);
                 });
                 //下面视频video的请求
-                axios.get('https://developer.duyiedu.com/vue/bz/video', {
-                    params: {
-                        start: 10,
-                        offset: 20
+                // axios.get('https://developer.duyiedu.com/vue/bz/video', {
+                //     params: {
+                //         start: 10,
+                //         offset: 20
+                //     }
+                // }).then(res => {
+                //     this.videoList = res.data.data;
+                // })
+                axios({
+                    method: 'get',
+                    url: 'https://developer.duyiedu.com/vue/bz/video',
+                    params:{
+                        start: 0,
+                        offset: 12
                     }
                 }).then(res => {
-                    this.videoList = res.data.data;
+                    this.videoCount = res.data.count;
+                    this.videoOldList = res.data.data;
                 })
             },
             mounted() {
