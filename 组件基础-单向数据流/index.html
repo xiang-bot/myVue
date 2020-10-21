@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- father:{{count}}
+        <button @click="count++">点击</button>
+        <my-count :count="count"></my-count> -->
+        <my-father >
+            <my-son></my-son>
+        </my-father>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        //全局组件
+        // Vue.component('my-count', {
+        //     //prop 验证是在一个对象里
+        //     props: {
+        //         count: Number
+        //     },
+        //     template: `
+        //         <div>
+        //        son: {{count}}
+        //        <button @click="count++">点击</button>
+        //         </div>
+        //         `
+        // })
+        // Vue.component('my-count', {
+        //     //prop 验证是在一个对象里
+        //     props: {
+        //         count: Number
+        //     },
+        //     template: `
+        //     father:{{count}}
+        //     <button @click="count++">点击</button>
+        //         `
+        // })
+        // 'my-father':{
+        //             template:`
+        //             <div>
+        //             father : {{count}}
+        //             <button @click="count++">点击</button>
+        //             </div>
+        //             `,
+        //             components:{
+        //                 'my-son':{
+        //                     template:`
+        //                     <div>
+        //             son : {{count}}
+        //             <button @click="count++">点击</button>
+        //             </div>
+        //                     `
+        //                 }
+        //             }
+
+        //         }
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                count: 0
+            },
+            components:{
+                'my-father':{
+                    template:`
+                    <div>
+                        <h1>11111111</h1>
+                    </div>
+                    `,
+                    components:{
+                        'my-son':{
+                            template:`
+                            <div>
+                                <h1>11111122111</h1>
+                         </div>
+                            `
+                        }
+                    }
+
+                }
+            }
+        })
+        // const vm = new Vue({
+        //     el:"#app",
+        //     data:{
+        //         count:0
+        //     },
+
+        // })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <style type="text/css">
+        p{
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+        .bord{
+            border-width: 2px;
+            border-color: red;
+            border-style: solid;
+        }
+        .backColor{
+            background-color: green;
+            color: #ffffff;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>happy快餐店菜单</h2>
+            <p 
+            v-for="(value,index) in menu"
+            @mouseover="handleOver(index)" @mouseout="handleOut(index)" @click="handleClick(index,$event)"
+             :class="{'bord': menu[index].haveBorder, 'backColor': menu[index].haveColor}" :key="index"  
+             >{{ value.text }}</p>
+
+            <hr>
+            <h4>您选择了：</h4>
+           <p v-for="text in msg1">{{text}}</p>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                menu:[
+                    {text: "美味汉堡", haveBorder: false, haveColor: false},
+                    {text: "香辣鸡翅", haveBorder: false, haveColor: false},
+                    {text: "开心可乐", haveBorder: false, haveColor: false}
+                ],
+                msg1:[]
+            },
+            methods: {
+                handleOver: function(index){
+                    this.menu[index].haveBorder = true;
+                },
+                handleOut: function(index){
+                    this.menu[index].haveBorder = false;
+                },
+                handleClick: function(index,e){
+                    const val = e.target.innerHTML;
+                    if(this.menu[index].haveColor){
+                        this.menu[index].haveColor = false;
+                        this.msg1.splice(val,1)
+                    }else{
+                        this.menu[index].haveColor = true;
+                        this.msg1.push(val);
+                    }
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>
