@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <fuzujian mes="hhhhah"></fuzujian>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('fuzujian',{
+            props:['mes'],
+            template:`
+                <h3>{{mes}}</h3>
+            `
+        })
+        const vm = new Vue({
+            el:"#app",
+            data:{
+                // mes:"我是父组件的数据要传给子组件"
+            }
+        })
+    </script>
+</body>
+</html>
