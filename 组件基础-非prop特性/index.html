@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <my-assembly type="radio" id="rad1" class="hahaah" a="1" b="10"></my-assembly> -->
+        <my-assembly type="radio" ></my-assembly>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+
+        Vue.component('my-assembly',{
+            //这里的a就是props特性，而b不是props特性.所以，b会到下面的div里面去0
+            props:['a'],
+            //禁用特性继承，如果你不希望你的元素继承你的跟元素，则，可以设置这个属性，就
+            //会只留下来class id
+            inheritAttrs:false,
+            mounted(){
+                console.log(this.$attrs);
+            },
+            // template:`
+            //     <div id="rad">
+            //         hahaha
+            //     </div>
+            // `
+            template:`
+                <table>
+                    选择：
+                    <input v-bind="$attrs"/>
+                </table>
+            `
+            //可以通过v-bind的方法，直接把$attrs的属性绑定在你想要绑定的值上
+        })
+
+
+        const vm = new Vue({
+            el:"#app",
+            data:{
+
+            }
+        })
+    </script>
+</body>
+</html>
