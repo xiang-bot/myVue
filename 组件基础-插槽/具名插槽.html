@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 什么是插槽，简单来说就是让你的父组件自己渲染的文本要渲染在页面上 -->
+    <div id="app">
+        <my-cmp>
+            <template v-slot:header>
+                <h1>头部</h1>
+              </template>
+            <template #main>
+                <p>内容1</p>
+                <p>内2容</p>
+            </template>
+            <!-- 这里的v-slot也可以简写成# -->
+            
+              <template v-slot:footer>
+                <p>底部</p>
+              </template>
+        </my-cmp>
+    </div>
+
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('my-cmp', {
+
+            template: `
+        <div class="container">
+            <header>
+            <slot name="header"></slot>
+            </header>
+            <main>
+                <slot name="main"></slot>
+            </main>
+            <footer a="1">
+                <slot name="footer"></slot>
+            </footer>
+        </div>
+            `
+            //其实插槽就是通过你使用slot标签，让你的父元素的内容可以渲染在页面上
+            //而v-slot属性，只能在template标签上使用，
+            //现在<template>元素中的所有内容都会被传入相应的插槽。
+            //任何没有被包裹在带有v-slot的<template>中的内容都会被视为默认插槽的内容。
+            //v-slot必须要和slot的name属性一起联用ps 而这个name也要特性
+        })
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                user: 111
+            },
+
+        })
+    </script>
+</body>
+
+</html>

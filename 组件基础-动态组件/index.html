@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 所谓的动态的组件切换就是通过component标签的is属性来切换相应的组件，
+    而is可以进行动态绑定，就是嵌套的套娃  父子组件进行 -->
+    <div id="app">
+        <button v-for="page in pages"
+                :key="page.id"
+                @click="pageCmp=page.cmp"
+        >
+        {{page.name}}
+        </button>
+        <component :is="pageCmp"></component>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('base-post',{
+            data(){
+                return {
+                    posts:[
+                    { title: "标题1", content: { template: `<div>内容1</div>`}, id: 11}, 
+                    { title: "标题2", content: { template: `<div>内容2</div>`}, id: 12}, 
+                    { title: "标题3", content: { template: `<div>内容3</div>`}, id: 13}, 
+                    ],
+                    postCmp:''
+                }
+            },
+            template:`
+            <div>
+            <button v-for=" post in posts"
+            @click="postCmp=post.content"
+            :key=post.id
+            >
+            {{post.title}}
+            </button>
+            <component :is="postCmp"></component>
+            </div>
+            `
+        })
+        Vue.component('base-more', {
+          template: `<div>更多内容</div>`
+        })
+        const vm = new Vue({
+            el:"#app",
+            data:{
+            pages: [
+              { name: '博客', cmp: 'base-post', id: 0},
+              { name: '更多', cmp: 'base-more', id: 1}
+              ],  
+              pageCmp:'base-post'
+            }
+        })
+    </script>
+</body>
+</html>

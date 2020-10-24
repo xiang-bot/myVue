@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 这个是要改变夫组件的整体字号大小，所以，要把数据传递到父组件，可以给夫组件绑定
+        一个自定以事件，然后通过v-on来监听，然后来改变大小的字号 -->
+        <div :style="{fontSize:postFontSize + 'em'}">
+        <blog-post v-for="post in posts" @enlarge-text="onEnlargeText"
+         :post="post"></blog-post>
+    </div>
+</div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('blog-post', {
+            props:{
+                post:{
+                    type:Object
+                }
+            },
+            template: `
+            <div class="blog-post">
+            <h3>{{post.title}}</h3>
+            <button @click="$emit('enlarge-text',0.2)">放大字号</button>
+            <div>{{post.content}}</div>
+            </div>
+            `
+            //子组件可以使用 $emit 触发父组件的自定义事件。然后改变数据
+            //$emit 的第二个参数来提供这个值,可以改变字号大小
+        })
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                posts:[
+                { title: '标题1', content: '正文内容', id: 0, },
+                { title: '标题2', content: '正文内容', id: 1, },
+                { title: '标题3', content: '正文内容', id: 2, },
+                ],
+                postFontSize:1
+            },
+            methods:{
+                onEnlargeText($event){
+                    //这里的$event就是你上面传入的你想要改变的值
+                    // console.log(w);
+                    this.postFontSize += ($event)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

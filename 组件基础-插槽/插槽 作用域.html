@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <my-cmp>
+          <template v-slot="value">
+              <!-- v-slot="{{user}}" -->
+              <!-- 也可以通过解构的方法来取出数据 -->
+              <!-- {{user.name}} -->
+              {{value.user.name}}
+              <!-- 这个是通过子元素的数据传递给夫级 -->
+              {{user.name}} 
+              <!-- 这个插值表达式是下面父元素自己的一个数据name, -->
+          </template>
+        </my-cmp>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('my-cmp',{
+            data(){
+                return {
+                    user:{
+                        name:'shanshan',
+                        age:18
+                    }
+                }
+            },
+            template:`
+                <span>
+                 <slot v-bind:user="user"></slot>
+                </span>
+            `
+            
+        })
+
+        const vm = new Vue({
+            el:"#app",
+            data:{
+                user:{
+                        name:'shanshan',
+                        age:18
+                    }
+            },
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <base-input @focus.native="onFocus" @blur="onBlur"></base-input>
+    </div>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('base-input', {
+            mounted() {
+                console.log(this.$listeners);
+            },
+            props: {},
+            template: `
+            <label>
+            姓名:
+            <input  type="text" v-on="$listeners"/>
+            </label>
+            `
+
+        })
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                onFocus() {
+                    console.log('focus');
+                },
+                onBlur() {
+                    console.log('Blur');
+                },
+                //当我不加$listeners
+                //可以看到，此时组件的根元素实际上是一个元素，
+                //那么父级的.native监听器将静默失败。它不会产生任何报错，但是onFocus处理函数不会如预期被调用。
+            }
+        })
+    </script>
+</body>
+
+</html>

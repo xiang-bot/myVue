@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button v-for="page in pages" :key="page.id" @click="pageCmp=page.cmp">
+            {{page.name}}
+        </button>
+        <component :is="pageCmp"></component>
+        <!-- 通过使用保留的 <component> 元素，并对其 is 特性进行动态绑定，你可以在同一个挂载点动态切换多个组件 -->
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('cmp-post', {
+            template: `
+            <div>post</div>
+           `
+        })
+        Vue.component('cmp-more', {
+            template: `
+            <div>more</div>
+           `
+        })
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                pages: [{
+                        name: '博客',
+                        cmp: 'cmp-post',
+                        id: 0
+                    },
+                    {
+                        name: '更多',
+                        cmp: 'cmp-more',
+                        id: 1
+                    }
+                ],
+                pageCmp:'cmp-post'
+            }
+        })
+    </script>
+</body>
+
+</html>

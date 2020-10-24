@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 什么是插槽，简单来说就是让你的父组件自己渲染的文本要渲染在页面上 -->
+    <div id="app">
+        <my-cmp>sub
+            <!-- <p>hhhh</p>
+            <h1>hhhh{{user}}</h1> -->
+        </my-cmp>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.component('my-cmp',{
+            // data(){
+            //     user:wu
+            // },
+            // template:`
+            // <div>
+            // <slot></slot>
+            // </div>
+            // `
+            template:`
+            <button type="submit">
+            <slot>sub1</slot>  
+            </button>
+            `
+            //上面的那个sub1是当组件没有提供插槽时，启动的备用插槽，
+            
+        })
+        // 父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。
+
+
+
+        const vm = new Vue({
+            el:"#app",
+            data:{
+                user:111
+            },
+
+        })
+    </script>
+</body>
+</html>
