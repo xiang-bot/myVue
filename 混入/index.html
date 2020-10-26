@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <cmd-1></cmd-1>
+        <cmd-2></cmd-2>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        const mixin1  = {
+            data(){
+                return {
+                    a:'全局使用'
+                }
+            },
+        }
+
+        //当自己的数据a不能使用的时候，或者说是没有数据的时候，会去上面找，
+        //但是 data数据要写mixins, 当自己有这个数据的时候，全局也有，会优先用自己的
+        //数据
+        Vue.component('cmd-1',{
+            mixins:[mixin1],
+            data(){
+                return {
+                    // a:'aaa'
+                }
+            },
+            mounted(){
+                console.log(this.a);
+            },
+            template:`
+            <div>
+                  aaa            
+            </div>
+            `
+        })
+        Vue.component('cmd-2',{
+            data(){
+                return {
+                    a:'aaacmd-2'
+                }
+            },
+            mounted(){
+                console.log(this.a);
+            },
+            template:`
+            <div>
+                  cmp-2           
+            </div>
+            `
+        })
+
+        const vm = new Vue({
+            el:'#app',
+            data:{}
+        })
+
+    </script>
+</body>
+</html>

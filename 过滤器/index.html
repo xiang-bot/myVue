@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{content | filter}}
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        Vue.filter('filter', (val) => {
+            // console.log(val);
+            if (!val) {
+                return
+            };
+            //  return val.charAt(0).toUpperCase() + val.slice(1)
+            //这个是让你的首字母大写，slice是删除你的第一个字母，
+            //返回其它的数组
+            const str = val.charAt(0).toUpperCase() + val.slice(1)
+            return str.split("").reverse().join("");
+            //这个就是反写字符串
+
+        })
+        //过滤器的主要目的是 可以修改你的值，就是，必须要首字母大写，你的首字母又不是
+        //大写，这里就可以使用过滤器
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                content: "sdgvv"
+            }
+        })
+        const vm1 = [1, 2, 3, 4, 5];
+        // console.log(vm1.slice(1));
+        //这个api没有0
+
+        const vm2 = 'shdksfhakfnj';
+        // var str = '';
+        // for (var i = 0; i <= vm2.length-1; i++) {
+        //     str += vm2[i] 
+        // }
+        // console.log(str);
+        var str = ''
+        for (var i = vm2.length - 1; i >= 0; i--) {
+            str += vm2[i]
+        }
+        console.log(str);
+    </script>
+</body>
+
+</html>

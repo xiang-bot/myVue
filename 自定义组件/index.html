@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-my-focus:foo="msg" v-model="msg">{{msg}}</input>
+        <!-- 这里的v-my-focus="这里的值，才是你的绑定值" 也是下面的value值-->
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        //我们可以自己去定义自己的组件，实现自己想实现的功能
+        //这个是全局组件，而局部组件是directives 复数形式
+        Vue.directive('my-focus', {
+
+            inserted(el) {
+                el.focus()
+            },
+            bind(el, binding, vnode) {
+                console.log(el);
+                console.log(binding.name);
+                console.log(binding.value);
+                console.log(binding.expression);
+                console.log(binding.arg);
+                // console.log(binding.modifiers);
+
+                // console.log(vnode.context);
+            },
+            // foo(){
+            //     console.log("我是foo");
+            // }
+        })
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                msg:"",
+            }
+        })
+    </script>
+</body>
+
+</html>

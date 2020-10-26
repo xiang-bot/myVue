@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-myshow="show"></input>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        //要自己写v-show,则，要明白是实现display的值来变化的
+        //1.
+        // Vue.directive('my-focus', {
+        //     bind(el,binding){
+        //         var display = binding.value ? '' : 'none';
+        //         el.style.display = display;
+
+        //     },
+        //     update(el,binding){
+        //         var display = binding.value ? '' : 'none';
+        //         el.style.display = display;
+        //     }
+        // })
+        Vue.directive('myshow', (el, binding) => {
+            const {
+                value
+            } = binding;
+            const display = value ? '' : 'none';
+            el.style.display = display;
+        })
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "",
+                show: false,
+            }
+        })
+    </script>
+</body>
+
+</html>

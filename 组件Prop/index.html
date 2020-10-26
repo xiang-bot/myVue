@@ -25,12 +25,13 @@
     <script>
         Vue.component('video-list',{
             props:['videoList'],
+            // 这里拿到父组件的数据
             template:`
                 <div class="video-list">
                 <video-item
                 v-for="video in videoList"
                 v-bind="video"
-                ></video-list>
+                ></video-item>
                 </div>
             `
         })
@@ -59,6 +60,7 @@
             el: "#app",
             data:{
                 videoList:[]
+                //父组件的数据
             },
             created(){
                 axios({
