@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- {{message}} -->
+    <!-- <my-component msg="我是父组件"></my-component> -->
+    <my-component :msg="message" :name="true" :num="123"></my-component>
+    <!--:msg=msg 作为值，传递给子组件 相当于你在msg里传递的
+    是函数的新参，而下面的props是接收你数据的值（）
+    mse 新参 = “实惨”
+    -->
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('my-component',{
+      props:['msg','name','num'],
+      //$props表示当前组件（mycomponent）中所定义的prop参数
+      template:`
+          <div>
+            <p>子组件{{msg}}</p>
+            <p>props参数name的类型是：{{name}}</p>
+            <p>props参数name的类型是：{{typeof this.$props.name}}</p>
+            <p>props参数name的类型是：{{typeof this.$props.num}}</p>
+          </div>
+      `
+      //子组件 要父组件的数据，
+    })
+
+//跟组件 所有组件的父级 父向子组件传递数据，
+  const vm = new Vue({
+    el:'#app',
+    data:{
+      message:'我是父组件中的数据'
+    }
+  })
+  </script>
+</body>
+</html>

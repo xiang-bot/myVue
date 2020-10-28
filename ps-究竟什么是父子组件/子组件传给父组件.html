@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <parent></parent>
+  </div>
+  <!--子组件向父组件传递要用$emit-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const child = {
+      template: `
+          <div>
+              <button @click="handleClick()">send</button>
+              <input v-model="childMessage">
+          </div>
+      `,
+      data() {
+        return {
+          childMessage: '子组件的信息'
+        }
+      },
+      methods: {
+        handleClick() {
+          //$emit用于向当前组件的父组件触发一个自定义事件，实现子组件向父组件的参数
+          //传递
+          //参数1.表示自定义事件
+          //参数2.表示要传递的数据
+           this.$emit('childFn',this.childMessage)
+        }
+      },
+    }
+
+
+
+
+    const parent = {
+      template: `
+          <div>
+            <child @childFn="transContent"></child>
+              子组件传来的数据:{{message}}
+          </div>
+      `,
+      data(){
+        return {
+          message:''
+        }
+      },
+      methods: {
+        transContent(str){
+          console.log(str)
+          this.message=str
+        }
+      },
+      components:{
+        child
+      },
+
+    }
+
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+
+      },
+
+      components: {
+        //第一个parent表示parent组件,使用标签名称
+        //第二个parent表示要注册组件(或者是保存了子组件的变量)
+        //当属性名和属性值相同时，可以简写为parent
+        parent
+      }
+    })
+  </script>
+</body>
+
+</html>
